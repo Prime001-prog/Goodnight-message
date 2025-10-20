@@ -1,0 +1,153 @@
+<<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Good Night Message</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #ff9a9e, #fad0c4, #fad0c4);
+            overflow: hidden;
+            color: #fff;
+            text-align: center;
+        }
+
+        .message-box {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+            z-index: 2;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.5em;
+            line-height: 1.8;
+        }
+
+        .heart {
+            color: #ff6b81;
+            font-size: 2em;
+            animation: beat 1s infinite;
+        }
+
+        @keyframes beat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            background-color: #ff6b81;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #ff4757;
+        }
+
+        #quote {
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            min-height: 40px;
+        }
+
+        #quote.show {
+            opacity: 1;
+        }
+
+        /* Falling hearts */
+        .heart-fall {
+            position: absolute;
+            top: -50px;
+            font-size: 1em;
+            color: #ff6b81;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="message-box">
+        <h1>Good Night, My Love </h1>
+        <p>
+            As you lay your head tonight, know that you are my everything.<br>
+            You light up my world in ways words cannot express.<br>
+            Your laughter is my favorite melody, your smile my favorite view.<br>
+            Sleep peacefully and dream sweet dreams, my angel.<br>
+            I love you more than words can say. <span class="heart">❤️</span>
+        </p>
+        <p id="quote"></p>
+        <button onclick="generateQuote()">New Sweet Message</button>
+    </div>
+
+    <script>
+        // Quotes for the random sweet messages
+        const quotes = [
+            "You are the reason I believe in love. Sweet dreams, my heart. ❤️",
+            "Every night I fall asleep with you in my heart and wake up with you in my dreams. 🌙",
+            "Your love is my safe haven. Sleep tight, my darling. 💕",
+            "The stars above shine for you, my love. Good night. ✨",
+            "I’d cross a thousand skies just to kiss you good night. 😘"
+        ];
+
+        const quoteElement = document.getElementById('quote');
+
+        function typeQuote(text, i = 0) {
+            if (i < text.length) {
+                quoteElement.textContent += text.charAt(i);
+                setTimeout(() => typeQuote(text, i + 1), 50);
+            }
+        }
+
+        function generateQuote() {
+            quoteElement.classList.remove('show');
+            quoteElement.textContent = '';
+            setTimeout(() => {
+                const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+                quoteElement.classList.add('show');
+                typeQuote(randomQuote);
+            }, 500);
+        }
+
+        // Auto-generate a new quote every 8 seconds
+        generateQuote();
+        setInterval(generateQuote, 8000);
+
+        // Falling hearts
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart-fall';
+            heart.textContent = 'love';
+            heart.style.left = Math.random() * window.innerWidth + 'px';
+            heart.style.fontSize = (10 + Math.random() * 20) + 'px';
+            heart.style.animationDuration = (5 + Math.random() * 5) + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 10000);
+        }
+
+        setInterval(createHeart, 500);
+    </script>
+</body>
+</html>
